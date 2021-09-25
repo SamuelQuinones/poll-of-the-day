@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Poll of the Day",
+  "name": "Mr Q's Poll of the Day",
   "icons": [
     {
       "src": "favicon.ico",
