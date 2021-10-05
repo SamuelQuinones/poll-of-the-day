@@ -1,5 +1,6 @@
 //* Core
 import { useMemo, useRef } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -66,6 +67,9 @@ const PollOfTheDay = () => {
         return;
     }
   };
+  const debouncedVote = useDebouncedCallback((option: number) => {
+    dispatch(voteActions.increment(option));
+  }, 250);
 
   const optionButtons = useMemo(
     () => (
@@ -76,7 +80,7 @@ const PollOfTheDay = () => {
               <Button
                 variant={variants.current[index]}
                 className="w-100 rounded-pill"
-                onClick={() => dispatch(voteActions.increment(index + 1))}
+                onClick={() => debouncedVote(index + 1)}
               >
                 {option}
               </Button>
@@ -85,7 +89,7 @@ const PollOfTheDay = () => {
         })}
       </>
     ),
-    [dispatch, options]
+    [debouncedVote, options]
   );
 
   const totalVotes = useMemo(

@@ -1,6 +1,6 @@
 {
   "name": "poll-of-the-day",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "homepage": "https://samuelquinones.github.io/poll-of-the-day",
   "dependencies": {
@@ -16,7 +16,20 @@
     "react-hook-form": "7.16.0",
     "react-redux": "7.2.5",
     "react-scripts": "4.0.3",
-    "web-vitals": "1.1.2"
+    "use-debounce": "7.0.0",
+    "web-vitals": "1.1.2",
+    "workbox-background-sync": "5.1.4",
+    "workbox-broadcast-update": "5.1.4",
+    "workbox-cacheable-response": "5.1.4",
+    "workbox-core": "5.1.4",
+    "workbox-expiration": "5.1.4",
+    "workbox-google-analytics": "5.1.4",
+    "workbox-navigation-preload": "5.1.4",
+    "workbox-precaching": "5.1.4",
+    "workbox-range-requests": "5.1.4",
+    "workbox-routing": "5.1.4",
+    "workbox-strategies": "5.1.4",
+    "workbox-streams": "5.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

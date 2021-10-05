@@ -24,8 +24,11 @@ const FinalResults = () => {
 
   return (
     <>
-      <section className="d-flex" id="post-action-buttons">
-        <h2 className="mb-0 me-auto">Final Results:</h2>
+      <section
+        className="d-flex flex-column flex-sm-row justify-content-center align-items-center"
+        id="post-action-buttons"
+      >
+        <h2 className="mb-0 flex-grow-1">Final Results:</h2>
 
         <div style={{ gap: "0.5rem" }} className="d-flex align-items-center">
           <Button
