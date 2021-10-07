@@ -2,7 +2,7 @@
   "name": "poll-of-the-day",
   "version": "1.0.1",
   "private": true,
-  "homepage": "https://samuelquinones.github.io/poll-of-the-day",
+  "homepage": "https://potd.benjaminquinones.com",
   "dependencies": {
     "@reduxjs/toolkit": "1.6.1",
     "@testing-library/jest-dom": "5.14.1",
