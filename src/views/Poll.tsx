@@ -1,30 +1,22 @@
 //* Core
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { variants } from "utils";
 
 //* REDUX
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getCurrentVote, getOptions, getQuestion } from "store/selectors";
-import { viewActions } from "store/View/slice";
-import { voteActions } from "store/Votes/slice";
+import { viewActions } from "store/slice/View";
+import { voteActions } from "store/slice/Votes";
 
 const PollOfTheDay = () => {
   const question = useAppSelector(getQuestion);
   const options = useAppSelector(getOptions);
   const currentVotes = useAppSelector(getCurrentVote);
   const dispatch = useAppDispatch();
-
-  const variants = useRef([
-    "primary",
-    "secondary",
-    "info",
-    "warning",
-    "success",
-    "danger",
-  ]);
 
   const rowHelper = (numCols: number) => {
     switch (numCols) {
@@ -78,7 +70,7 @@ const PollOfTheDay = () => {
           return (
             <Col key={`voting-option-${index + 1}`} className="mb-2">
               <Button
-                variant={variants.current[index]}
+                variant={variants[index]}
                 className="w-100 rounded-pill"
                 onClick={() => debouncedVote(index + 1)}
               >
@@ -118,7 +110,7 @@ const PollOfTheDay = () => {
               return (
                 <div
                   key={`voting-results-${index + 1}`}
-                  className={`text-center border border-1 bg-${variants.current[index]}`}
+                  className={`text-center border border-1 bg-${variants[index]}`}
                   style={{
                     height: "2rem",
                     width: percentage ? `${percentage}%` : "auto",
@@ -132,7 +124,10 @@ const PollOfTheDay = () => {
       {/* Vote Counts */}
       <Row id="vote-counts" as="section" {...rowHelper(options.length)}>
         {options.map((_, index) => (
-          <Col key={`voting-results-${index + 1}`} className="text-center">
+          <Col
+            key={`voting-results-${index + 1}`}
+            className={`text-center text-${variants[index]}`}
+          >
             {currentVotes?.[`option${index + 1}`]} Votes
           </Col>
         ))}

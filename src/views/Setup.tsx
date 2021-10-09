@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import InputGroup from "react-bootstrap/InputGroup";
+import { svgProps } from "utils";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { ReactComponent as Trash } from "assets/trash-fill.svg";
+import { ReactComponent as Plus } from "assets/plus-circle.svg";
+import { ReactComponent as Cross } from "assets/x-lg.svg";
+import { ReactComponent as Check } from "assets/check-circle.svg";
 
 //* REDUX
 import { useAppDispatch } from "store/hooks";
-import { formActions } from "store/Form/slice";
-import { viewActions } from "store/View/slice";
-import { voteActions } from "store/Votes/slice";
+import { formActions } from "store/slice/Form";
+import { viewActions } from "store/slice/View";
+import { voteActions } from "store/slice/Votes";
 
 export type FormValues = {
   question: string;
@@ -24,6 +28,7 @@ const PollSetup = () => {
     control,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -51,7 +56,10 @@ const PollSetup = () => {
       dispatch(voteActions.set({ option: i + 1, count: 0 }));
     }
     //* then set up the values
-    dispatch(formActions.setQuestion(data.question));
+    const question = /\?/gm.test(data.question)
+      ? data.question
+      : data.question + "?";
+    dispatch(formActions.setQuestion(question));
     dispatch(formActions.setOptionsFormValue(data.options));
     dispatch(viewActions.setView("poll"));
   };
@@ -68,6 +76,7 @@ const PollSetup = () => {
             autoComplete="off"
             placeholder="What is today's question"
             {...register("question", { required: true })}
+            // className="rounded-pill"
             isInvalid={!!errors?.question}
           />
         </Form.Group>
@@ -77,35 +86,34 @@ const PollSetup = () => {
           <p className="mb-0 mt-2">Answers...</p>
           {fields.map((field, index) => {
             return (
-              <InputGroup
+              <div
                 id={`option-${field.id}-group`}
-                className="my-2 rounded"
+                className="my-2 d-flex"
                 key={field.id}
-                hasValidation
+                style={{ gap: "0.5rem" }}
               >
                 <Form.Control
-                  style={{
-                    borderTopRightRadius: "0px",
-                    borderBottomRightRadius: "0px",
-                  }}
                   autoComplete="off"
                   type="text"
-                  aria-describedby={`option-${field.id}-button`}
                   aria-label="Add a poll option"
                   placeholder="Add a poll option"
+                  data-lpignore="true"
                   {...register(`options.${index}.answer` as const, {
                     required: true,
                   })}
+                  // className="rounded-pill"
                   isInvalid={!!errors?.options?.[index]?.answer}
                 />
                 <Button
                   id={`question-${field.id}-button`}
                   onClick={() => remove(index)}
                   variant="outline-secondary"
+                  title="Remove this option"
+                  // className="rounded-circle"
                 >
-                  X
+                  <Cross {...svgProps} />
                 </Button>
-              </InputGroup>
+              </div>
             );
           })}
         </div>
@@ -115,25 +123,28 @@ const PollSetup = () => {
       {/* ACTIONS */}
       <section id="action-buttons" className="d-flex flex-column flex-md-row">
         <Button
-          className="rounded-0 flex-grow-1"
+          className="rounded-pill flex-grow-1"
           onClick={() => append({ answer: "" })}
           disabled={fields.length >= 6}
         >
-          Add Option +
+          <Plus {...svgProps} /> Add Option
         </Button>
         <Button
-          className="rounded-0 flex-grow-1"
-          onClick={() => setValue("options", [{ answer: "" }, { answer: "" }])}
+          className="rounded-pill flex-grow-1"
+          onClick={() => {
+            setValue("options", [{ answer: "" }, { answer: "" }]);
+            clearErrors("options");
+          }}
           variant="warning"
         >
-          Clear All
+          <Trash {...svgProps} /> Clear All
         </Button>
         <Button
-          className="rounded-0 flex-grow-1"
+          className="rounded-pill flex-grow-1"
           type="submit"
-          variant="danger"
+          variant="success"
         >
-          Start Poll
+          <Check {...svgProps} /> Start Poll
         </Button>
       </section>
     </form>
