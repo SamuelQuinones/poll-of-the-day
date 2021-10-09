@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { formReducer } from "./Form/slice";
-import { viewReducer } from "./View/slice";
-import { voteReducer } from "./Votes/slice";
+import { formReducer } from "./slice/Form";
+import { viewReducer } from "./slice/View";
+import { voteReducer } from "./slice/Votes";
 
 export function makeStore() {
   return configureStore({
