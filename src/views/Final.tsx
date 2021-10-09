@@ -35,7 +35,6 @@ const FinalResults = () => {
 
         <div style={{ gap: "0.5rem" }} className="d-flex align-items-center">
           <Button
-            variant="dark"
             size="sm"
             className="rounded-pill"
             onClick={() => dispatch(viewActions.setView("poll"))}
@@ -55,6 +54,7 @@ const FinalResults = () => {
           </Button>
           <Button
             className="rounded-pill"
+            variant="dark"
             size="sm"
             onClick={() => {
               dispatch(formActions.reset());
