@@ -19,6 +19,7 @@ function App() {
     <div className="App">
       <Header />
       <Container
+        as="main"
         className={`flex-column d-flex flex-fill ${
           currentView === "poll" && "justify-content-around"
         } ${currentView === "setup" && "justify-content-start"}`}
