@@ -40,6 +40,7 @@ const PollSetup = () => {
     name: "options",
     control,
   });
+
   //* 2 option mimnimum
   useEffect(() => {
     if (fields.length < 2) {
@@ -56,7 +57,7 @@ const PollSetup = () => {
       dispatch(voteActions.set({ option: i + 1, count: 0 }));
     }
     //* then set up the values
-    const question = /\?/gm.test(data.question)
+    const question = /\?$/gm.test(data.question)
       ? data.question
       : data.question + "?";
     dispatch(formActions.setQuestion(question));
@@ -69,7 +70,7 @@ const PollSetup = () => {
       {/* INPUT FIELD */}
       <section id="text-inputs">
         {/* QUESTION */}
-        <Form.Group id="the-question" controlId="poll-question">
+        <Form.Group as="fieldset" id="the-question" controlId="poll-question">
           <Form.Label>Today's Question</Form.Label>
           <Form.Control
             type="text"
@@ -79,44 +80,65 @@ const PollSetup = () => {
             // className="rounded-pill"
             isInvalid={!!errors?.question}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors?.question && "Question is a Required Field"}
+          </Form.Control.Feedback>
         </Form.Group>
         {/* QUESTION END */}
         {/* ANSWERS */}
-        <div id="the-answers">
-          <p className="mb-0 mt-2">Answers...</p>
+        <fieldset id="the-answers" className="my-2">
+          <p className="mb-0">Answers...</p>
           {fields.map((field, index) => {
+            const errorMessage =
+              index < 2
+                ? "This option is required"
+                : "If included, this option is required";
             return (
               <div
-                id={`option-${field.id}-group`}
-                className="my-2 d-flex"
+                id={`option-${field.id}-wrapper`}
                 key={field.id}
-                style={{ gap: "0.5rem" }}
+                className="my-2"
               >
-                <Form.Control
-                  autoComplete="off"
-                  type="text"
-                  aria-label="Add a poll option"
-                  placeholder="Add a poll option"
-                  data-lpignore="true"
-                  {...register(`options.${index}.answer` as const, {
-                    required: true,
-                  })}
-                  // className="rounded-pill"
-                  isInvalid={!!errors?.options?.[index]?.answer}
-                />
-                <Button
-                  id={`question-${field.id}-button`}
-                  onClick={() => remove(index)}
-                  variant="outline-secondary"
-                  title="Remove this option"
-                  // className="rounded-circle"
+                <div
+                  id={`option-${field.id}-group`}
+                  className="d-flex"
+                  style={{ gap: "0.5rem" }}
                 >
-                  <Cross {...svgProps} />
-                </Button>
+                  <Form.Control
+                    autoComplete="off"
+                    type="text"
+                    aria-label="Add a poll option"
+                    placeholder="Add a poll option"
+                    data-lpignore="true"
+                    {...register(`options.${index}.answer` as const, {
+                      required: true,
+                    })}
+                    // className="rounded-pill"
+                    isInvalid={!!errors?.options?.[index]?.answer}
+                  />
+                  <Button
+                    id={`option-${field.id}-button`}
+                    onClick={() => remove(index)}
+                    variant="outline-secondary"
+                    title="Remove this option"
+                    // className="rounded-circle"
+                  >
+                    <Cross {...svgProps} />
+                  </Button>
+                </div>
+                {errors?.options?.[index]?.answer && (
+                  <Form.Control.Feedback
+                    type="invalid"
+                    id={`option-${field.id}-feedback`}
+                    className="d-block mt-0"
+                  >
+                    {errors?.options?.[index]?.answer && errorMessage}
+                  </Form.Control.Feedback>
+                )}
               </div>
             );
           })}
-        </div>
+        </fieldset>
         {/* ANSWERS END */}
       </section>
       {/* INPUT FIELD END */}
