@@ -40,7 +40,6 @@ module.exports = {
         // we should allow implicit any
         "@typescript-eslint/no-explicit-any": "off",
 
-        // We don't need this ... for now
         "@typescript-eslint/explicit-module-boundary-types": "off",
 
         // should probably allow this ... but we wont for now
