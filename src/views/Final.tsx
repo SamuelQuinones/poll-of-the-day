@@ -9,7 +9,7 @@ import { ReactComponent as Repeat } from "assets/arrow-repeat.svg";
 
 //* REDUX
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { getCurrentVote, getOptions } from "store/selectors";
+import { getCurrentVote, getOptions, getQuestion } from "store/selectors";
 import { viewActions } from "store/slice/View";
 import { formActions } from "store/slice/Form";
 import { voteActions } from "store/slice/Votes";
@@ -18,6 +18,7 @@ const FinalResults = () => {
   const dispatch = useAppDispatch();
   const options = useAppSelector(getOptions);
   const currentVotes = useAppSelector(getCurrentVote);
+  const question = useAppSelector(getQuestion);
 
   const totalVotes = useMemo(
     () =>
@@ -67,6 +68,9 @@ const FinalResults = () => {
         </div>
       </section>
       <section id="results" className="my-auto">
+        <p className="text-center mb-5 fs-4" id="the-question-again">
+          <em>{question}</em>
+        </p>
         {options.map((option, index) => {
           const cv = currentVotes?.[`option${index + 1}`];
           const percentage = totalVotes && cv && (cv / totalVotes) * 100;
