@@ -83,7 +83,7 @@ const FinalResults = () => {
                 </p>
               </Col>
               <Col>
-                <div
+                <span
                   className={`border border-1 bg-${variants[index]}`}
                   style={{
                     height: "2rem",

@@ -12,53 +12,54 @@ import { getCurrentVote, getOptions, getQuestion } from "store/selectors";
 import { viewActions } from "store/slice/View";
 import { voteActions } from "store/slice/Votes";
 
+const rowHelper = (numCols: number) => {
+  switch (numCols) {
+    case 2:
+      return {
+        xs: 1,
+        md: 2,
+      };
+
+    case 3:
+      return {
+        xs: 1,
+        sm: 1,
+        md: 3,
+      };
+
+    case 4:
+      return {
+        xs: 1,
+        md: 2,
+        xxl: 4,
+      };
+
+    case 5:
+      return {
+        xs: 1,
+        md: 2,
+        xl: 3,
+        xxl: 5,
+      };
+
+    case 6:
+      return {
+        xs: 1,
+        md: 2,
+        xl: 3,
+      };
+
+    default:
+      return;
+  }
+};
+
 const PollOfTheDay = () => {
   const question = useAppSelector(getQuestion);
   const options = useAppSelector(getOptions);
   const currentVotes = useAppSelector(getCurrentVote);
   const dispatch = useAppDispatch();
 
-  const rowHelper = (numCols: number) => {
-    switch (numCols) {
-      case 2:
-        return {
-          xs: 1,
-          md: 2,
-        };
-
-      case 3:
-        return {
-          xs: 1,
-          sm: 1,
-          md: 3,
-        };
-
-      case 4:
-        return {
-          xs: 1,
-          md: 2,
-          xxl: 4,
-        };
-
-      case 5:
-        return {
-          xs: 1,
-          md: 2,
-          xl: 3,
-          xxl: 5,
-        };
-
-      case 6:
-        return {
-          xs: 1,
-          md: 2,
-          xl: 3,
-        };
-
-      default:
-        return;
-    }
-  };
   const debouncedVote = useDebouncedCallback((option: number) => {
     dispatch(voteActions.increment(option));
   }, 250);
@@ -108,7 +109,7 @@ const PollOfTheDay = () => {
               const cv = currentVotes?.[`option${index + 1}`];
               const percentage = cv && (cv / totalVotes) * 100;
               return (
-                <div
+                <span
                   key={`voting-results-${index + 1}`}
                   className={`text-center border border-1 bg-${variants[index]}`}
                   style={{
