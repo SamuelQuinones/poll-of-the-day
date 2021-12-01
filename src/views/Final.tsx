@@ -84,7 +84,7 @@ const FinalResults = () => {
               </Col>
               <Col>
                 <span
-                  className={`border border-1 bg-${variants[index]}`}
+                  className={`border border-1 bg-${variants[index]} d-block`}
                   style={{
                     height: "2rem",
                     width: percentage ? `${percentage}%` : "0%",

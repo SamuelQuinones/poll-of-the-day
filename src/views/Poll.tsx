@@ -111,7 +111,7 @@ const PollOfTheDay = () => {
               return (
                 <span
                   key={`voting-results-${index + 1}`}
-                  className={`text-center border border-1 bg-${variants[index]}`}
+                  className={`text-center border border-1 bg-${variants[index]} d-block`}
                   style={{
                     height: "2rem",
                     width: percentage ? `${percentage}%` : "auto",
