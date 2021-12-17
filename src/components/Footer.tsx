@@ -9,7 +9,7 @@ import { ReactComponent as Gear } from "assets/gear.svg";
 const Footer = memo(() => {
   const [show, setShow] = useState(false);
   return (
-    <footer>
+    <footer className="flex-shrink-0">
       <Container className="text-center mb-2" fluid="md">
         <hr className="mb-2" />
         <div>

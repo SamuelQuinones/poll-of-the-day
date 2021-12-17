@@ -1,5 +1,11 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
-  margin: 0; 
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -21,7 +27,7 @@ h3 {
 .App {
   display: flex !important;
   flex-direction: column !important;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 #action-buttons {

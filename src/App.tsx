@@ -31,7 +31,7 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <div className="App flex-grow-1">
       <Header />
       <Container as="main" className={containerClasses} fluid="md">
         {currentView === "setup" && <PollSetup />}
