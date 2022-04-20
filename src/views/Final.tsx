@@ -1,5 +1,6 @@
 //* Core
 import { useMemo } from "react";
+import { batch } from "react-redux";
 import { variants, svgProps } from "utils";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -47,8 +48,10 @@ const FinalResults = () => {
             variant="secondary"
             size="sm"
             onClick={() => {
-              dispatch(voteActions.reset());
-              dispatch(viewActions.setView("poll"));
+              batch(() => {
+                dispatch(voteActions.reset());
+                dispatch(viewActions.setView("poll"));
+              });
             }}
           >
             <Repeat {...svgProps} /> Run this poll again
@@ -58,9 +61,11 @@ const FinalResults = () => {
             variant="dark"
             size="sm"
             onClick={() => {
-              dispatch(formActions.reset());
-              dispatch(voteActions.reset());
-              dispatch(viewActions.setView("setup"));
+              batch(() => {
+                dispatch(formActions.reset());
+                dispatch(voteActions.reset());
+                dispatch(viewActions.setView("setup"));
+              });
             }}
           >
             Run another poll

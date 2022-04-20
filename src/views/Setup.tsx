@@ -13,6 +13,7 @@ import { useAppDispatch } from "store/hooks";
 import { formActions } from "store/slice/Form";
 import { viewActions } from "store/slice/View";
 import { voteActions } from "store/slice/Votes";
+import { batch } from "react-redux";
 
 export type FormValues = {
   question: string;
@@ -60,9 +61,11 @@ const PollSetup = () => {
     const question = /\?$/gm.test(data.question)
       ? data.question
       : data.question + "?";
-    dispatch(formActions.setQuestion(question));
-    dispatch(formActions.setOptionsFormValue(data.options));
-    dispatch(viewActions.setView("poll"));
+    batch(() => {
+      dispatch(formActions.setQuestion(question));
+      dispatch(formActions.setOptionsFormValue(data.options));
+      dispatch(viewActions.setView("poll"));
+    });
   };
 
   return (
